@@ -17,9 +17,11 @@ inputFolder = 'INPUT'
 outputFolder = 'OUTPUT'
 # Get the timestamp of now to prepare unique output Excel file name
 now = datetime.now()
+# Make string out of it and replace the sign does not allow for Excel file name
+now = str(now).replace(':', '.')
 
 # Start Excel file
-outputWorkbook = xlsxwriter.Workbook(outputFolder + '/output' + str(now) + '.xlsx')
+outputWorkbook = xlsxwriter.Workbook(outputFolder + '/output' + now + '.xlsx')
 # Create new worksheet to which data will be provided
 outputWorksheet = outputWorkbook.add_worksheet(name='OUTPUT')
 
@@ -59,6 +61,7 @@ for filename in os.listdir(inputFolder):
             outputWorksheet.write(rowNum, 1, 'ERROR: No date detected')
         outputWorksheet.write(rowNum, 2, filename)
         rowNum += 1
+
 # Close the Excel file
 try:
     outputWorkbook.close()
